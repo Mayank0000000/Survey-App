@@ -1,21 +1,29 @@
 import React, { useState, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+
 import {
   ChakraProvider,
   Box,
   FormControl,
   FormLabel,
-  Input,  
+  Input,
   Button,
   Stack,
+  Text
 } from '@chakra-ui/react';
 
+
 const Survey = () => {
-  const [formTitle, setFormTitle] = useState('');
-  const [formDescription, setFormDescription] = useState('');
   const [questionType, setQuestionType] = useState('');
   const [questionText, setQuestionText] = useState('');
-  const [options, setOptions] = useState([]); 
-  const [jsonData, setJsonData] = useState()
+  const [options, setOptions] = useState([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm();
 
   const jsonDataRef = useRef({
     survey_block: {
@@ -24,7 +32,7 @@ const Survey = () => {
       questions: [],
     },
   });
- 
+
 
   const handleAddOption = () => {
     setOptions([...options, '']);
@@ -36,95 +44,141 @@ const Survey = () => {
     setOptions(updatedOptions);
   };
 
- const optionsTotal = options.map((ele) => {
-  return {
-    id: Date.now(),
-    name: ele    
-  }
- })
-
-  const handleSubmit = () => {
-    const data = {
+  const optionsTotal = options.map((ele) => {
+    return {
       id: Date.now(),
-      type: questionType,
-      question: questionText,
-      options: optionsTotal  
-    }  
-    // const jsonData = {
-    //   survey_block: {
-    //     "title": "Dynamic Survey Generation",
-    //     "description": "",
-    //     "questions": [
+      name: ele
+    }
+  })
 
-    //     ]
-    //   }
-    // };
-    // jsonData.survey_block.questions.push(data)  
-    //  console.log(jsonData);
-    jsonDataRef.current.survey_block.questions.push(data);
-   console.log(jsonDataRef.current)
-    setOptions([])
-    setQuestionType('')
+  const handleDeleteOption = (index) => {
+    const updatedOptions = [...options];
+    updatedOptions.splice(index, 1);
+    setOptions(updatedOptions);
   };
 
- 
- 
+  const onSubmit = (data) => {
+
+    if (!questionType || options.length === 0) {
+      return;
+    }
+
+    console.log(data)
+    const newData = {
+      id: Date.now(),
+      title: data.title,
+      description: data.description,
+      type: questionType,
+      question: questionText,
+      options: optionsTotal
+    }
+
+    jsonDataRef.current.survey_block.questions.push(newData);
+    console.log(jsonDataRef.current)
+    setOptions([]);
+    setQuestionType('');
+    reset();
+  }
+
   return (
     <ChakraProvider>
       <Box p={5}>
-        <Stack spacing={3}>
-          <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input
-              placeholder="Enter form title"
-              value={formTitle}
-              onChange={(e) => setFormTitle(e.target.value)}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Description</FormLabel>
-            <Input
-              placeholder="Enter form description"
-              value={formDescription}
-              onChange={(e) => setFormDescription(e.target.value)}
-            />
-          </FormControl>
-
-          <FormControl>
-            <FormLabel>Select Question Type</FormLabel>
-            <Stack direction="row">
-              <Button onClick={() => setQuestionType('input')}>Input</Button>
-              <Button onClick={() => setQuestionType('checkbox')}>
-                Checkbox
-              </Button>
-              <Button onClick={() => setQuestionType('radio')}>Radio</Button>
-            </Stack>
-          </FormControl>
-
-          {questionType && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing={3}>
             <FormControl>
+              <FormLabel>Title</FormLabel>
               <Input
-                placeholder={`Enter ${questionType} question`}
-                value={questionText}
-                onChange={(e) => setQuestionText(e.target.value)}
+                {
+                ...register('title', {
+                  required: "Title is required",
+                  validate: value => value.trim() !== "" || "Title is required"                 
+                })
+                }
+                placeholder="Enter title"
+                
               />
-              {options.map((option, index) => (
-                <Input
-                  key={index}
-                  placeholder={`Option ${index + 1}`}
-                  value={option}
-                  onChange={(e) => handleOptionChange(index, e.target.value)}
-                />
-              ))}
-              <Button onClick={handleAddOption}>Add Option</Button>
+              {errors.title && (
+                <Text color='red'>{`*${errors.title.message}`}</Text>
+              )}
             </FormControl>
-          )}       
 
-          <Button colorScheme="teal" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Stack>
+            <FormControl>
+              <FormLabel>Description</FormLabel>
+              <Input
+                {
+                ...register('description', {
+                  required: "Description is required",
+                  validate: value => value.trim() !== "" || "Description is required" 
+                })
+                }
+                placeholder="Enter description"
+              />
+              {errors.description && (
+                <Text color='red'>{`*${errors.description.message}`}</Text>
+              )}
+
+            </FormControl>
+
+            <FormControl isInvalid={errors.questionType}>
+              <FormLabel>Select Question Type</FormLabel>
+              <Stack direction="row" >
+                <Button onClick={() => setQuestionType('input')}>Input</Button>
+                <Button onClick={() => setQuestionType('checkbox')}>
+                  Checkbox
+                </Button>
+                <Button onClick={() => setQuestionType('radio')}>Radio</Button>
+              </Stack>
+              {errors.questionType && (
+                <Text color='red'>{`*${errors.questionType.message}`}</Text>
+              )}
+
+            </FormControl>
+
+
+            {questionType && (
+              <FormControl>
+                <Input
+                  placeholder={`Enter ${questionType} question`}
+                  {
+                  ...register('question', {
+                    required: "Enter a valid question",
+                    validate: value => value.trim() !== "" || "Enter a valid question"                    
+                    
+                  })
+                  }
+                  
+                />
+                {errors.question && (
+                  <Text color='red'>{`*${errors.question.message}`}</Text>
+                )}
+                {options.map((option, index) => (
+                  <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                    <Input
+                      required
+                      placeholder={`Option ${index + 1}`}
+                      value={option}
+                      onChange={(e) => handleOptionChange(index, e.target.value)}
+                      marginRight="2"
+                    />
+                    <Button
+                      colorScheme="red"
+                      size="sm"
+                      onClick={() => handleDeleteOption(index)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+
+                ))}
+                <Button onClick={handleAddOption}>Add Option</Button>
+              </FormControl>
+            )}
+
+            <Button colorScheme="teal" type='submit'>
+              Submit
+            </Button>
+          </Stack>
+        </form>
       </Box>
     </ChakraProvider>
   );
