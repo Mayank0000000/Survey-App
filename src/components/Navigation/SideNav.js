@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <Box
       as="nav"
-      // pos="fixed"
+      pos="sticky"
       top="0"
       left="0"
       h="100vh"
@@ -22,9 +22,7 @@ const Sidebar = () => {
       bg={bgColor}
       color={color}
       boxShadow='lg'
-      p="4"
-      // display={{ base: 'none', md: 'block' }}      
-      // Add margin to the right to avoid overlapping with the top navigation
+      p="4"    
       mr={{ base: '0', md: '4' }}
     >
 
