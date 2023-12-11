@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 
 
-const Survey = () => {   
+const Survey = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [questionValue, setQuestionValue] = useState('')
@@ -23,7 +23,7 @@ const Survey = () => {
   const inputsTypes = ['input', 'checkbox', 'radio'];
 
   const {
-    register,    
+    register,
     handleSubmit,
     formState: { errors },
     reset
@@ -37,6 +37,8 @@ const Survey = () => {
     },
   });
 
+
+  console.log(questions)
 
   const handleAddOption = (questionIndex) => {
     questions[questionIndex].question = questionValue;
@@ -53,8 +55,8 @@ const Survey = () => {
     updatedQuestions[questionIndex].options[optionIndex] = value;
     setQuestions(updatedQuestions);
   };
-  
- 
+
+
 
   const handleDeleteOption = (questionIndex, optionIndex) => {
     const updatedQuestions = [...questions];
@@ -93,7 +95,7 @@ const Survey = () => {
     });
 
     jsonDataRef.current.survey_block.questions.push(...newDataArray);
-    console.log(jsonDataRef.current);    
+    console.log(jsonDataRef.current);
     reset();
   };
 

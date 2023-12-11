@@ -22,8 +22,9 @@ const Sidebar = () => {
       bg={bgColor}
       color={color}
       boxShadow='lg'
-      p="4"    
+      p="4"
       mr={{ base: '0', md: '4' }}
+    // move into class
     >
 
       <Flex direction="column">

@@ -1,5 +1,7 @@
 .container {
     display: flex;
-    gap: 2rem;
+   justify-content: flex-start;
+   gap: 10rem;
+   
   
 }
