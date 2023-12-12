@@ -1,0 +1,21 @@
+/* NavElement.css */
+
+.nav-link {
+    align-items: center;
+    cursor: pointer;    
+  }
+
+  .text {
+    font-size: 1rem;
+    margin-left: 10px;
+  }
+  
+  .nav-link:hover {
+    color: red;
+  }
+  
+  .icon-button {
+    background: transparent;
+    color: #1E90FF;
+  }
+  

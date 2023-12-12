@@ -1,32 +1,15 @@
-// Sidebar.js
-
 import React from 'react';
 import NavElement from './NavElement';
-import { Box, Flex, VStack, useColorModeValue } from '@chakra-ui/react';
-
+import { Box, Flex, VStack } from '@chakra-ui/react';
+import './SideNav.css';
 import { Icon } from '../../icons/Icons';
 
 const Sidebar = () => {
-
-  const bgColor = useColorModeValue('white', 'blue.800');
-  const color = useColorModeValue('black', 'white');
-
   return (
     <Box
-      as="nav"
-      pos="sticky"
-      top="0"
-      left="0"
-      h="100vh"
-      w="200px"
-      bg={bgColor}
-      color={color}
-      boxShadow='lg'
-      p="4"
-      mr={{ base: '0', md: '4' }}
-    // move into class
+    as="nav"
+    className="sidebar sidebar-bg-light"    
     >
-
       <Flex direction="column">
         <VStack spacing="4">
           <Icon />

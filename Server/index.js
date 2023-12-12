@@ -40,12 +40,31 @@ app.post('/add-question', async (req, res) => {
     }
 });
 
+app.get('/questions/:questionId', async (req, res) => {
+    const questionId = req.params.questionId;
+  
+    try {
+      
+      const result = await SurveyData.findOne({ 'questions._id': questionId }, { 'questions.$': 1 });
+      const question = result ? result.questions[0] : null;
+  
+      if (!question) {
+        return res.status(404).json({ error: 'Question not found' });
+      }
+  
+      res.json(question);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+
 
 
 mongoose.connect(mongoDBURL).then(() => {
     app.get('/', (req, res) => {
 
-        return res.status(234).send("welcomeeeee")
+        return res.status(234).send("welcome")
     })
 
 

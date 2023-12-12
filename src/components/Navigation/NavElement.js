@@ -2,45 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Flex, IconButton, Text } from '@chakra-ui/react';
 import { FiHome, FiEdit, FiImage, FiVideo } from 'react-icons/fi';
+import './NavElement.css';
 
-
-// classname
 function NavElement() {
 
-  const icon = ({title}) => {
-    return <><IconButton icon={<FiHome />} aria-label="Home" bg="transparent" color='#1E90FF' />
-      <Text fontSize="md" ml='10px'>{title}</Text></>
-  }
-
+  const navItems = [
+    { to: '/', icon: <FiHome />, label: 'Home' },
+    { to: '/survey', icon: <FiEdit />, label: 'Survey' },
+    { to: '/image', icon: <FiImage />, label: 'Image' },
+    { to: '/video', icon: <FiVideo />, label: 'Video' },
+  ];
   return (
-    <>
-      <Link to='/'>
-        <Flex alignItems="center" _hover={{ color: 'red' }} cursor='pointer' >
-          {/* refactor */}
-          <IconButton icon={<FiHome />} aria-label="Home" bg="transparent" color='#1E90FF' />
-          <Text fontSize="md" ml='10px'>Home</Text>
+    navItems.map(({ to, icon, label }) => (
+      <Link key={label} to={to} className="nav-link">
+        <Flex alignItems="center">
+          <IconButton icon={icon} aria-label={label} className="icon-button" />
+          <Text className='text'>{label}</Text>
         </Flex>
       </Link>
-      <Link to='/survey'>
-        <Flex alignItems="center" _hover={{ color: 'red' }} cursor='pointer' >
-          <IconButton icon={<FiEdit />} aria-label="Survey" bg="transparent" color='#1E90FF' />
-          <Text fontSize="md" ml='10px'>Survey</Text>
-        </Flex>
-      </Link>
-
-      <Flex alignItems="center" _hover={{ color: 'red' }} cursor='pointer' >
-        <IconButton icon={<FiImage />} aria-label="Image" bg="transparent" color='#1E90FF' />
-        <Text fontSize="md" ml='10px'>Image</Text>
-      </Flex>
-
-      <Flex alignItems="center" _hover={{ color: 'red' }} cursor='pointer' >
-        <IconButton icon={<FiVideo />} aria-label="Video" bg="transparent" color='#1E90FF' />
-        <Text fontSize="md" ml='10px'>Video</Text>
-      </Flex>
-    </>
-  )
+    ))
+  );
 }
 
 export default NavElement;
-
-
