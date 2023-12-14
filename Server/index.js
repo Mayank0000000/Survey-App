@@ -4,6 +4,7 @@ const { PORT, mongoDBURL } = require('./config')
 
 const mongoose = require('mongoose');
 
+
 const SurveyData = require('./Models/SurveySchema')
 
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
 
 
 
@@ -42,11 +44,14 @@ app.post('/add-question', async (req, res) => {
 
 app.get('/questions/:questionId', async (req, res) => {
     const questionId = req.params.questionId;
+    
   
     try {
       
-      const result = await SurveyData.findOne({ 'questions._id': questionId }, { 'questions.$': 1 });
+      const result = await SurveyData.findOne({ 'questions._id': questionId }, { 'questions.$': 1 });    
+     
       const question = result ? result.questions[0] : null;
+      
   
       if (!question) {
         return res.status(404).json({ error: 'Question not found' });
@@ -57,6 +62,11 @@ app.get('/questions/:questionId', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
+
+  app.get('/', async (req, res) => {
+    const  completeData = await SurveyData.find();
+    return res.json(completeData)
+  })
   
 
 
