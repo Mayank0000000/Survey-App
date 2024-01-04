@@ -6,6 +6,7 @@ import QuestionTypeSelector from '../components/Survey/QuestionTypeSelector';
 import SurveyQuestion from '../components/Survey/SurveyQuestion';
 import DescriptionInput from '../components/Survey/DescriptionInput';
 import axios from 'axios';
+import { BASE_URL as baseurl } from '../constants';
 
 import {
   ChakraProvider,
@@ -103,7 +104,7 @@ const Survey = () => {
     console.log('Logged questions:', jsonDataRef.current.survey_block);
 
     
-   axios.post('http://localhost:3001/add-question', jsonDataRef.current.survey_block)
+   axios.post(`${baseurl}/add-question`, jsonDataRef.current.survey_block)
   .then(response => {
     console.log('Server Response:', response.data);
   })

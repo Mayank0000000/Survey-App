@@ -11,11 +11,14 @@ import {
 } from '@chakra-ui/react';
 
 import axios from 'axios';
+import { BASE_URL as baseurl } from '../constants';
+
 
 const Sidebar = ({ survey, onClose }) => {
     let [publish, setPublish] = useState('Publish');
     let [surveyId, setSurveyId] = useState('');
     let [isButtonDisabled, setButtonDisabled] = useState(true);  
+    
 
     console.log(survey)
 
@@ -35,7 +38,7 @@ const Sidebar = ({ survey, onClose }) => {
         setButtonDisabled(false)
 
         if (survey.survey_type === 'survey') {
-            axios.patch(`http://localhost:3001/edit/${survey._id}`, body)
+            axios.patch(`${baseurl}/edit/${survey._id}`, body)
                 .then(response => {
 
                     console.log(response);
@@ -50,7 +53,7 @@ const Sidebar = ({ survey, onClose }) => {
             console.log('sfggdgdthdhfghbfn')
             console.log(survey._id)
 
-            axios.patch(`http://localhost:3001/api/edit-image/${survey._id}`, body)
+            axios.patch(`${baseurl}/api/edit-image/${survey._id}`, body)
                 .then(response => {
                     console.log(response);
                 })
@@ -61,7 +64,7 @@ const Sidebar = ({ survey, onClose }) => {
         }
 
         if (survey.survey_type === 'video') {
-            axios.patch(`http://localhost:3001/videos/edit-video/${survey._id}`, body)
+            axios.patch(`${baseurl}/videos/edit-video/${survey._id}`, body)
                 .then(response => {
                     console.log(response);
                 })

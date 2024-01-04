@@ -11,7 +11,8 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios'
-import './Image.css'
+import './Image.css';
+import { BASE_URL as baseurl } from '../constants';
 
 const ImageUploader = () => {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -48,7 +49,7 @@ const ImageUploader = () => {
       images: imageToBase64
     }
     console.log(body)
-    axios.post('http://localhost:3001/api/add-images', body)
+    axios.post(`${baseurl}/api/add-images`, body)
     .then(response => {
       console.log('Server Response:', response.data);
     })

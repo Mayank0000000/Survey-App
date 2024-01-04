@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Heading, Text, Button, Link,DrawerBody, DrawerHeader, DrawerCloseButton} from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { TEST_UTL as testerurl } from '../../constants';
 
 
 function ImagesPublishReview({ survey, publish, surveyId, isDisabled }) {
@@ -30,7 +31,7 @@ function ImagesPublishReview({ survey, publish, surveyId, isDisabled }) {
         ))}
       </Box>
     </DrawerBody>
-    {publish === 'Published' && <Link href={`http://localhost:3002/${surveyId}`} target='_blank' mb='1rem'>
+    {publish === 'Published' && <Link href={`${testerurl}/?${surveyId}`} target='_blank' mb='1rem'>
                 Click here to give the test <ExternalLinkIcon mx='2px' />
             </Link>}
             <RouterLink to={`/Image-Analytics/${surveyId}`}>

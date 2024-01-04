@@ -4,6 +4,7 @@ import VideoResultsContainer from '../components/Videos/VideosResultsContainer';
 import { Flex, Text, Heading } from '@chakra-ui/react'; 
 import NoResponseComponent from '../components/NoResponseComponent';
 import './VideoResults.css'
+import { BASE_URL as baseurl } from '../constants';
 
 function VideoResults() {
   const [surveyData, setSurveyData] = useState(null);
@@ -11,7 +12,7 @@ function VideoResults() {
 
   
   const fetchData = () => {
-    fetch(`http://localhost:3001/video-test/get-test-video/${id.id}`)
+    fetch(`${baseurl}/video-test/get-test-video/${id.id}`)
       .then((res) => res.json())
       .then((data) => setSurveyData(data))
       .catch((error) => console.error('Error fetching survey data:', error));
@@ -25,7 +26,7 @@ function VideoResults() {
   return (
     <>
     <Flex className='video-results'>
-      <Text className='total-response'>Total Responses: { surveyData?.surveyResponses.length }</Text>
+      <Text className='total-'>Total Responses: { surveyData?.surveyResponses.length }</Text>
 
       {surveyData &&
         surveyData.surveyResponses.map((curr,i) => {

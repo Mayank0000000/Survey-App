@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import './SurveyPreview.css'
+import { TEST_UTL as testerurl } from '../constants';
 
 
 function SurveyPreview({ survey, publish, surveyId, isDisabled }) {   
@@ -50,7 +51,7 @@ function SurveyPreview({ survey, publish, surveyId, isDisabled }) {
                     </>
                 )}
             </DrawerBody>
-            {publish === 'Published' && <Link href={`http://localhost:3002/${surveyId}`} target='_blank'>
+            {publish === 'Published' && <Link href={`${testerurl}/?${surveyId}`} target='_blank'>
                 Click here to give the test <ExternalLinkIcon mx='2px' />
             </Link>}
             <RouterLink to={`/Analytics/${surveyId}`}>

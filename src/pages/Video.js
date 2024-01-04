@@ -12,6 +12,7 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import './Image.css'
+import { BASE_URL as baseurl } from '../constants';
 
 const VideoUploader = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -40,7 +41,7 @@ const VideoUploader = () => {
       videos: videoToBase64,
     };
     console.log(body)
-    axios.post('http://localhost:3001/videos/add-videos', body)
+    axios.post(`${baseurl}/videos/add-videos`, body)
     .then(response => {
       console.log('Server Response:', response.data);
     })

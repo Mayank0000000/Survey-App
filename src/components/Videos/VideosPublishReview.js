@@ -3,6 +3,8 @@ import React from 'react';
 import { Box, Heading, Text, Button, Link, DrawerBody,DrawerCloseButton, DrawerHeader } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { TEST_UTL as testerurl } from '../../constants';
+
 
 function VideoPublishReview({ survey, publish, surveyId, isDisabled }) {
   console.log(survey);
@@ -33,7 +35,7 @@ function VideoPublishReview({ survey, publish, surveyId, isDisabled }) {
         </Box>
       </DrawerBody>
       {publish === 'Published' && (
-        <Link href={`http://localhost:3002/${surveyId}`} target='_blank' mb='1rem'>
+        <Link href={`${testerurl}/?${surveyId}`} target='_blank' mb='1rem'>
           Click here to give the test <ExternalLinkIcon mx='2px' />
         </Link>
       )}

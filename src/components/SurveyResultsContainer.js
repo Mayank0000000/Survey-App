@@ -4,6 +4,7 @@ import { Box, Heading, Spinner } from '@chakra-ui/react';
 import SurveyResults from './SurveyResults';
 import { useParams } from 'react-router-dom';
 import NoResponseComponent from './NoResponseComponent';
+import { BASE_URL as baseurl } from '../constants';
 
 const SurveyResultsContainer = () => {
   const [surveyData, setSurveyData] = useState(null);
@@ -16,7 +17,7 @@ const SurveyResultsContainer = () => {
   }, []);
 
   const fetchData = () => {
-    fetch(`http://localhost:3001/get-Survey/${id.id}`)
+    fetch(`${baseurl}/get-Survey/${id.id}`)
       .then((res) => res.json())
       .then((data) => setSurveyData(data))
       .catch((error) => console.error('Error fetching survey data:', error));

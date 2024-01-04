@@ -3,6 +3,7 @@ import { Flex, Box, Text, Spinner } from '@chakra-ui/react';
 import QuestionSurvey from '../components/QuestionSurvey';
 import Sidebar from '../components/Sidebar';
 import './Home.css'
+import { BASE_URL as baseurl } from '../constants';
 
 function Home(props) {
   const [surveyData, setSurveyData] = useState([]);
@@ -11,10 +12,10 @@ function Home(props) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [selectedSurvey, setSelectedSurvey] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false)
-  
+
 
   const SurveyData = () => {
-    return fetch('http://localhost:3001')
+    return fetch(`${baseurl}`)
       .then(response => response.json())
       .then(data => {
         setSurveyData(data);
@@ -22,26 +23,26 @@ function Home(props) {
       });
   };
   const ImageData = () => {
-    return fetch('http://localhost:3001/api/get-images').then(res => res.json()).then(data => {
+    return fetch(`${baseurl}/api/get-images`).then(res => res.json()).then(data => {
       setImageSurveyData(data)
       setDataLoaded(true)
     })
   }
 
   const VideoData = () => {
-    return fetch('http://localhost:3001/videos/get-videos').then(res => res.json()).then(data => {
+    return fetch(`${baseurl}/videos/get-videos`).then(res => res.json()).then(data => {
       setVideoSurveyData(data)
       setDataLoaded(true)
     })
-    
+
   }
-  
+
   useEffect(() => {
     SurveyData();
     ImageData();
     VideoData()
   }, []);
-  
+
 
   const handleSurveyClick = survey => {
     setSelectedSurvey(survey);
@@ -53,20 +54,20 @@ function Home(props) {
   };
 
   return (
-    <Flex      
-      className="flex-container"    
-      
+    <Flex
+      className="flex-container"
+
     >
       {/* Question Surveys Section */}
       <Box
-      className="surveys-box"       
+        className="surveys-box"
         boxShadow="md"
       >
         <Box
-         
+
           className="surveys-box-header"
         >
-          <Text  className="text-survey">
+          <Text className="text-survey">
             Questions Survey
           </Text>
         </Box>
@@ -79,19 +80,19 @@ function Home(props) {
               mb="3"
             />
           ))}
-          {!dataLoaded && <Spinner/>}
+          {!dataLoaded && <Spinner />}
         </Flex>
       </Box>
 
       {/* Image Section */}
       <Box
-      className="surveys-box"        
+        className="surveys-box"
         boxShadow="md"
       >
         <Box
-         className="surveys-box-header"
+          className="surveys-box-header"
         >
-          <Text  className="text-survey">
+          <Text className="text-survey">
             Images Survey
           </Text>
         </Box>
@@ -104,19 +105,19 @@ function Home(props) {
               mb="3"
             />
           ))}
-          {!dataLoaded && <Spinner/>}
+          {!dataLoaded && <Spinner />}
         </Flex>
       </Box>
 
       {/* Videos Section */}
       <Box
-      className="surveys-box"      
+        className="surveys-box"
         boxShadow="md"
       >
         <Box
-        className="surveys-box-header"
+          className="surveys-box-header"
         >
-          <Text  className="text-survey">
+          <Text className="text-survey">
             Videos Survey
           </Text>
         </Box>
@@ -129,12 +130,12 @@ function Home(props) {
               mb="3"
             />
           ))}
-          {!dataLoaded && <Spinner/>}
+          {!dataLoaded && <Spinner />}
         </Flex>
       </Box>
 
       {isSidebarOpen && (
-        <Sidebar survey={selectedSurvey} onClose={closeSidebar}  />
+        <Sidebar survey={selectedSurvey} onClose={closeSidebar} />
       )}
     </Flex>
   );
