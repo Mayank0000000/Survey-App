@@ -1,0 +1,12 @@
+.video-results {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.total-response{
+font-weight: bold;
+font-size: 1.5rem;
+color: red;
+}

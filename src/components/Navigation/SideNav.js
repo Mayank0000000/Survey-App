@@ -7,6 +7,7 @@ import { Icon } from '../../icons/Icons';
 const Sidebar = () => {
   return (
     <Box
+    boxShadow='lg'
     as="nav"
     className="sidebar sidebar-bg-light"    
     >

@@ -1,49 +1,44 @@
+
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import TitleInput from '../components/Survey/TitleInput';
+import QuestionTypeSelector from '../components/Survey/QuestionTypeSelector';
+import SurveyQuestion from '../components/Survey/SurveyQuestion';
+import DescriptionInput from '../components/Survey/DescriptionInput';
+import axios from 'axios';
 
 import {
   ChakraProvider,
   Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
   Stack,
-  Text
+  Button,
 } from '@chakra-ui/react';
+
 
 
 const Survey = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
-  const [questions, setQuestions] = useState([]);
-  const [questionValue, setQuestionValue] = useState('')
-
-  const inputsTypes = ['input', 'checkbox', 'radio'];
+  const [questions, setQuestions] = useState([]); 
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
   const jsonDataRef = useRef({
     survey_block: {
-      title: 'Dynamic Survey Generation',
+      title: '',
       description: '',
       questions: [],
     },
   });
-
-
-  console.log(questions)
-
-  const handleAddOption = (questionIndex) => {
-    questions[questionIndex].question = questionValue;
+  const handleAddOption = (questionIndex) => {   
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex].options = [
       ...updatedQuestions[questionIndex].options,
-      ''
+      '',
     ];
     setQuestions(updatedQuestions);
   };
@@ -54,13 +49,12 @@ const Survey = () => {
     setQuestions(updatedQuestions);
   };
 
-
-
   const handleDeleteOption = (questionIndex, optionIndex) => {
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex].options.splice(optionIndex, 1);
     setQuestions(updatedQuestions);
   };
+
   const setQuestionTypeHandler = (val) => {
     setTotalQuestions((prev) => prev + 1);
     if (totalQuestions < 5) {
@@ -70,38 +64,56 @@ const Survey = () => {
           id: Date.now(),
           type: val,
           options: [],
-          question: `Enter ${val} question`
-        }
+          question: `Enter ${val} question`,
+        },
       ]);
     }
   };
+  const handleQuestionValueChange = (questionIndex, value) => {    
+    questions[questionIndex].question = value;
+  };
+  console.log(questions)
 
   const onSubmit = (data) => {
-    console.log(questions)
-    const newDataArray = questions.map((question) => {
+    if(questions.length === 0) {
+      alert('Enter Questions')
+      return;
+    }
+    for(let i = 0; i<questions.length; i++) {
+      console.log(questions[i])
+      if(questions[i].options.length === 0 && questions[i].type !== 'input') {
+        alert('Enter options')
+        return;
+      }
+    }
+    console.log('Form data:', data);
+    jsonDataRef.current.survey_block.title = data.title;
+    jsonDataRef.current.survey_block.description = data.description;
+    const newDataArray = questions.map((question, index) => {
       return {
-        id: question.id,
-        title: data.title,
-        description: data.description,
         type: question.type,
         question: question.question,
-        options: question.options.map((option, index) => ({
-          id: Date.now() + index,
-          name: option
-        }))
+        options: question.options.map((option, optionIndex) => ({
+          name: option,
+        })),
       };
     });
 
     jsonDataRef.current.survey_block.questions.push(...newDataArray);
-    console.log(jsonDataRef.current);
+    console.log('Logged questions:', jsonDataRef.current.survey_block);
+
+    
+   axios.post('http://localhost:3001/add-question', jsonDataRef.current.survey_block)
+  .then(response => {
+    console.log('Server Response:', response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error.response);
+  });
+
     reset();
+    setQuestions([])
   };
-
-
-  const trim = (value, error) => {
-    return value.trim() !== "" || error;
-  }
-
 
 
   return (
@@ -109,98 +121,25 @@ const Survey = () => {
       <Box p={5}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={3}>
-            <FormControl>
-              <FormLabel>Title</FormLabel>
-              <Input
-                {...register('title', {
-                  required: 'Title is required',
-                  validate: (value) => trim(value, 'Title is required')
-                })}
-                placeholder="Enter title"
-              />
-              {errors.title && (
-                <Text color="red">{`*${errors.title.message}`}</Text>
-              )}
-            </FormControl>
-
-            <FormControl>
-              <FormLabel>Description</FormLabel>
-              <Input
-                {...register('description', {
-                  required: 'Description is required',
-                  validate: (value) => trim(value, 'Description is required')
-                })}
-                placeholder="Enter description"
-              />
-              {errors.description && (
-                <Text color="red">{`*${errors.description.message}`}</Text>
-              )}
-            </FormControl>
-
-            <FormControl isInvalid={errors.questionType}>
-              <FormLabel>Select Question Type</FormLabel>
-              <Stack direction="row">
-                {inputsTypes.map((val, i) => (
-                  <Button key={i} onClick={() => setQuestionTypeHandler(val)}>
-                    {val}
-                  </Button>
-                ))}
-              </Stack>
-              {errors.questionType && (
-                <Text color="red">{`*${errors.questionType.message}`}</Text>
-              )}
-            </FormControl>
+            <TitleInput register={register} errors={errors} />
+            <DescriptionInput register={register} errors={errors} />
+            <QuestionTypeSelector
+              setQuestionTypeHandler={setQuestionTypeHandler}
+              errors={errors}
+            />
 
             {questions.map((curr, questionIndex) => (
-              <FormControl key={curr.id}>
-                <Input
-                  placeholder={`Enter ${curr.type} question`}
-                  {...register(`questions[${questionIndex}].question`, {
-                    required: 'Enter a valid question',
-                    validate: (value) => trim(value, 'Enter a valid question')
-                  })}
-                  onChange={(e) => setQuestionValue(e.target.value)}
-                />
-
-                {errors.question && (
-                  <Text color="red">{`*${errors.question.message}`}</Text>
-                )}
-
-                {['checkbox', 'radio'].includes(curr.type) && (
-                  <>
-                    {curr.options.map((option, optionIndex) => (
-                      <div
-                        key={optionIndex}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '10px'
-                        }}
-                      >
-                        <Input
-                          required
-                          placeholder={`Option ${optionIndex + 1}`}
-                          value={option}
-                          onChange={(e) =>
-                            handleOptionChange(questionIndex, optionIndex, e.target.value)
-                          }
-                          marginRight="2"
-                        />
-                        <Button
-                          colorScheme="red"
-                          size="sm"
-                          onClick={() => handleDeleteOption(questionIndex, optionIndex)}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    ))}
-                    <Button onClick={() => handleAddOption(questionIndex)}>
-                      Add Option
-                    </Button>
-                  </>
-                )}
-              </FormControl>
+              <SurveyQuestion
+                key={curr.id}
+                question={curr}
+                questionIndex={questionIndex}
+                register={register}
+                errors={errors}
+                handleAddOption={handleAddOption}
+                handleOptionChange={handleOptionChange}
+                handleDeleteOption={handleDeleteOption}
+                onQuestionValueChange={handleQuestionValueChange}
+              />
             ))}
 
             <Button colorScheme="teal" type="submit">

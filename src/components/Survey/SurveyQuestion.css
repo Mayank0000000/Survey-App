@@ -1,0 +1,36 @@
+
+.FormControl {
+    margin-bottom: 20px;
+  }
+  
+ 
+  .Input {
+    
+    margin-bottom: 10px;
+  }
+  
+
+  .Text {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  
+  .OptionsContainer {
+    margin-top: 10px;
+  }
+  
+ 
+  .OptionRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+ 
+  .DeleteButton {
+    margin-left: 5px;
+    background-color: red;
+  }
+  

@@ -1,0 +1,31 @@
+.surveys-box {
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+    min-width: 33.33%;
+    margin-left: 10px;
+   
+  }
+  .flex-container {
+    padding: 5px;
+    min-height: 100vh;
+    flex-direction: row;
+    width: 900px;
+    margin-bottom: 10px;
+  }
+  .surveys-box-header {
+    padding: 18px;
+    border-bottom: 1px solid #ddd;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+  }
+  .text-survey {
+    white-space: nowrap;
+    font-weight: bold;
+   font-size: 1.4rem;   
+  }
+  .content-survey{
+    flex-direction: column;
+    padding: 4px;
+  }

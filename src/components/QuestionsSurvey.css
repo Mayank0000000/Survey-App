@@ -1,0 +1,10 @@
+
+.question-survey-container {
+    border-width: 1px;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 16px;
+    margin: 10px;
+    background-color: white;
+    cursor: pointer;
+}
