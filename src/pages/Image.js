@@ -7,7 +7,8 @@ import {
   Input,
   Stack,
   Text,
-  VStack,  
+  VStack, 
+  useToast 
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios'
@@ -19,6 +20,7 @@ const ImageUploader = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageToBase64, setImageToBase64] = useState([])
+  const toast = useToast();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -56,6 +58,16 @@ const ImageUploader = () => {
     .catch(error => {
       console.error('Error:', error.response);
     });
+    toast({
+      title: 'Data Submitted',
+      description: 'Your data has been successfully submitted.',
+      status: 'success',
+      duration: 5000, 
+      isClosable: true,
+    });
+    setSelectedImages([]);
+    setTitle('');
+    setDescription('')
    
   };
 

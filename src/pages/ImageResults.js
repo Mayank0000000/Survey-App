@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import ImagesResultsContainer from '../components/Images/ImagesResultsContainer';
 import NoResponseComponent from '../components/NoResponseComponent';
 import { BASE_URL as baseurl } from '../constants';
+import { Text, Spinner } from '@chakra-ui/react'; 
+import './ImageResults.css'
+
 
 function ImageResults() {
     const [surveyData, setSurveyData] = useState(null);
@@ -24,8 +27,10 @@ function ImageResults() {
 
   return (
     <div>
+       <Text className='image-response'>Total Responses: { surveyData?.surveyResponses.length }</Text>
         {surveyData && <ImagesResultsContainer data={surveyData}/>}
         {surveyData?.surveyResponses.length === 0 && <NoResponseComponent/>}
+        {!surveyData && <Spinner/>}
     </div>
   )
 }

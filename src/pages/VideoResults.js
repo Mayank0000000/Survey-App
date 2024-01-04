@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import VideoResultsContainer from '../components/Videos/VideosResultsContainer';
-import { Flex, Text, Heading } from '@chakra-ui/react'; 
+import { Flex, Text, Spinner } from '@chakra-ui/react'; 
 import NoResponseComponent from '../components/NoResponseComponent';
 import './VideoResults.css'
 import { BASE_URL as baseurl } from '../constants';
@@ -26,7 +26,7 @@ function VideoResults() {
   return (
     <>
     <Flex className='video-results'>
-      <Text className='total-'>Total Responses: { surveyData?.surveyResponses.length }</Text>
+      <Text className='total-response'>Total Responses: { surveyData?.surveyResponses.length }</Text>
 
       {surveyData &&
         surveyData.surveyResponses.map((curr,i) => {
@@ -35,6 +35,7 @@ function VideoResults() {
           );
         })}
     </Flex>
+    {!surveyData && <Spinner/>}
     {surveyData?.surveyResponses.length === 0 && <NoResponseComponent/>}
     </>
   );

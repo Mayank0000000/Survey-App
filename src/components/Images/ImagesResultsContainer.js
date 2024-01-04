@@ -10,7 +10,7 @@ function ImagesResultsContainer({ data }) {
       {data.surveyResponses?.map((curr, index) => (
         <Box key={curr._id}>
           <Text fontSize="xl" fontWeight="bold" mb="2">
-            Survey #{index + 1} Results
+            User {index + 1}
           </Text>
           <Flex flexDirection='row' alignItems="center">
             {curr.response.map((ele, subIndex) => (

@@ -17,14 +17,14 @@ import { BASE_URL as baseurl } from '../constants';
 const Sidebar = ({ survey, onClose }) => {
     let [publish, setPublish] = useState('Publish');
     let [surveyId, setSurveyId] = useState('');
-    let [isButtonDisabled, setButtonDisabled] = useState(true);  
-    
+    let [isButtonDisabled, setButtonDisabled] = useState(true);
+
 
     console.log(survey)
 
     const handlePublish = () => {
         if (survey.test) {
-            
+
             return;
         }
 
@@ -75,7 +75,7 @@ const Sidebar = ({ survey, onClose }) => {
         }
     };
 
-    
+
     if (survey.test) {
         publish = 'Published';
         surveyId = survey._id;
@@ -93,7 +93,7 @@ const Sidebar = ({ survey, onClose }) => {
 
                 {survey.survey_type === 'image' && <ImagesPublishReview survey={survey} onClose={onClose} publish={publish} surveyId={surveyId} isDisabled={isButtonDisabled} />}
 
-                {survey.survey_type === 'video' && <VideosPublishReview survey={survey} onClose={onClose} publish={publish} surveyId={surveyId} isDisabled={isButtonDisabled}/>}
+                {survey.survey_type === 'video' && <VideosPublishReview survey={survey} onClose={onClose} publish={publish} surveyId={surveyId} isDisabled={isButtonDisabled} />}
 
 
                 <Button onClick={handlePublish} mt='1rem'>

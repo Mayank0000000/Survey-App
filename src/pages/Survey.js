@@ -13,6 +13,7 @@ import {
   Box,
   Stack,
   Button,
+  useToast 
 } from '@chakra-ui/react';
 
 
@@ -20,6 +21,7 @@ import {
 const Survey = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [questions, setQuestions] = useState([]); 
+  const toast = useToast();
 
   const {
     register,
@@ -114,6 +116,13 @@ const Survey = () => {
 
     reset();
     setQuestions([])
+    toast({
+      title: 'Data Submitted',
+      description: 'Your data has been successfully submitted.',
+      status: 'success',
+      duration: 5000, 
+      isClosable: true,
+    });
   };
 
 

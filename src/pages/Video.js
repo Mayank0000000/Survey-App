@@ -7,7 +7,8 @@ import {
   Input,
   Stack,
   Text,
-  VStack  
+  VStack,
+  useToast   
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import axios from 'axios';
@@ -19,6 +20,7 @@ const VideoUploader = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [videoToBase64, setVideoToBase64] = useState('');
+  const toast = useToast();
 
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
@@ -40,7 +42,7 @@ const VideoUploader = () => {
       description: description,
       videos: videoToBase64,
     };
-    console.log(body)
+    
     axios.post(`${baseurl}/videos/add-videos`, body)
     .then(response => {
       console.log('Server Response:', response.data);
@@ -48,6 +50,16 @@ const VideoUploader = () => {
     .catch(error => {
       console.error('Error:', error.response);
     });  
+    setTitle('');
+    setDescription('')
+    setSelectedVideo(null)
+    toast({
+      title: 'Data Submitted',
+      description: 'Your data has been successfully submitted.',
+      status: 'success',
+      duration: 5000, 
+      isClosable: true,
+    });
     
   };
 

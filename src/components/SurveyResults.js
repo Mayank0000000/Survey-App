@@ -33,37 +33,32 @@ const SurveyResults = ({ surveyResponses }) => {
                     borderRadius="md"
                     p={3}
                     bgColor="gray.100"
+                    mb='10px'
                   >
                     <HStack justifyContent="space-between">
                       <Text fontSize="sm" color="gray.500">
                         Submitted at: {new Date(response.submittedAt).toLocaleString()}
-                      </Text>
-                      <Badge colorScheme="teal" fontSize="sm">
-                        Percentage
-                      </Badge>
+                      </Text>                     
                     </HStack>
                     <Box>
-                      <Text>
+                      <Badge colorScheme="teal"> 
                         {answer.answer} - {percentage.toFixed(2)}%
-                      </Text>
+                      </Badge>
                     </Box>
                   </VStack>
                 );
               }
             } else if (answer) {
               return (
-                <VStack key={idx} spacing={2} align="stretch" borderWidth="1px" borderRadius="md" p={3} bgColor="gray.100">
+                <VStack key={idx} spacing={2} align="stretch" borderWidth="1px" borderRadius="md" p={3} bgColor="gray.100" mb='10px'>
                   <HStack justifyContent="space-between">
                     <Text fontSize="sm" color="gray.500">
                       Submitted at: {new Date(response.submittedAt).toLocaleString()}
-                    </Text>
-                    <Badge colorScheme="teal" fontSize="sm">
-                      Text
-                    </Badge>
+                    </Text>                    
                   </HStack>
-                  <Box>
+                  <Badge colorScheme="teal">
                     <Text>{answer.answer}</Text>
-                  </Box>
+                  </Badge>
                 </VStack>
               );
             }
