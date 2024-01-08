@@ -1,8 +1,5 @@
-// surveyRoutes.js
 const express = require('express');
 const router = express.Router();
-
-// const TesterSrvey = require('./Models/TesterSurveySchema');
 
 const TesterSrvey = require('../Models/TesterSurveySchema')
 
@@ -35,7 +32,4 @@ router.post('/add-Survey', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-
-
 module.exports = router;

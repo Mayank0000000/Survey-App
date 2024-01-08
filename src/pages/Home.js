@@ -14,7 +14,7 @@ function Home(props) {
   const [dataLoaded, setDataLoaded] = useState(false);
 
   const SurveyData = () => {
-    return fetch(`${baseurl}`)
+    return fetch(`http://localhost:3001/`)
       .then(response => response.json())
       .then(data => {
         setSurveyData(data);
@@ -40,6 +40,8 @@ function Home(props) {
     ImageData();
     VideoData()
   }, []);
+
+  console.log(surveyData)
 
   const handleSurveyClick = survey => {
     setSelectedSurvey(survey);
