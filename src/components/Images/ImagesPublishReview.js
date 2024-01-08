@@ -7,7 +7,7 @@ import { TEST_UTL as testerurl } from '../../constants';
 
 
 function ImagesPublishReview({ survey, publish, surveyId, isDisabled }) {
-  console.log(survey);
+  
 
   return (
     <>

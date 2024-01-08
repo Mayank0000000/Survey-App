@@ -11,8 +11,7 @@ function Home(props) {
   const [videoSurveyData, setVideoSurveyData] = useState([]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [selectedSurvey, setSelectedSurvey] = useState(null);
-  const [dataLoaded, setDataLoaded] = useState(false)
-
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const SurveyData = () => {
     return fetch(`${baseurl}`)
@@ -36,13 +35,11 @@ function Home(props) {
     })
 
   }
-
   useEffect(() => {
     SurveyData();
     ImageData();
     VideoData()
   }, []);
-
 
   const handleSurveyClick = survey => {
     setSelectedSurvey(survey);
@@ -56,7 +53,6 @@ function Home(props) {
   return (
     <Flex
       className="flex-container"
-
     >
       {/* Question Surveys Section */}
       <Box
@@ -64,7 +60,6 @@ function Home(props) {
         boxShadow="md"
       >
         <Box
-
           className="surveys-box-header"
         >
           <Text className="text-survey">

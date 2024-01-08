@@ -74,8 +74,7 @@ const Survey = () => {
   };
   const handleQuestionValueChange = (questionIndex, value) => {    
     questions[questionIndex].question = value;
-  };
-  console.log(questions)
+  };  
 
   const onSubmit = (data) => {
     if(questions.length === 0) {

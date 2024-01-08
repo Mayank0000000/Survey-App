@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Link as RouterLink } from 'react-router-dom';
 import SurveyPreview from './SurveyPreview';
 import ImagesPublishReview from './Images/ImagesPublishReview';
 import VideosPublishReview from './Videos/VideosPublishReview';
@@ -17,16 +16,12 @@ import { BASE_URL as baseurl } from '../constants';
 const Sidebar = ({ survey, onClose }) => {
     let [publish, setPublish] = useState('Publish');
     let [surveyId, setSurveyId] = useState('');
-    let [isButtonDisabled, setButtonDisabled] = useState(true);
-
-
-    console.log(survey)
+    let [isButtonDisabled, setButtonDisabled] = useState(true);    
 
     const handlePublish = () => {
         if (survey.test) {
-
             return;
-        }
+        }        
 
         const body = {
             "test": true
@@ -48,10 +43,7 @@ const Sidebar = ({ survey, onClose }) => {
                 });
         }
 
-        if (survey.survey_type === 'image') {
-
-            console.log('sfggdgdthdhfghbfn')
-            console.log(survey._id)
+        if (survey.survey_type === 'image') {           
 
             axios.patch(`${baseurl}/api/edit-image/${survey._id}`, body)
                 .then(response => {
@@ -71,7 +63,6 @@ const Sidebar = ({ survey, onClose }) => {
                 .catch(error => {
                     console.error(error);
                 });
-
         }
     };
 
@@ -88,11 +79,8 @@ const Sidebar = ({ survey, onClose }) => {
             <DrawerOverlay />
             <DrawerContent bg="gray.800" p="4" color="white">
 
-
                 {survey.survey_type === 'survey' && <SurveyPreview survey={survey} onClose={onClose} publish={publish} surveyId={surveyId} isDisabled={isButtonDisabled} />}
-
                 {survey.survey_type === 'image' && <ImagesPublishReview survey={survey} onClose={onClose} publish={publish} surveyId={surveyId} isDisabled={isButtonDisabled} />}
-
                 {survey.survey_type === 'video' && <VideosPublishReview survey={survey} onClose={onClose} publish={publish} surveyId={surveyId} isDisabled={isButtonDisabled} />}
 
 

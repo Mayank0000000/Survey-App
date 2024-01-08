@@ -17,10 +17,7 @@ import './SurveyPreview.css'
 import { TEST_UTL as testerurl } from '../constants';
 
 
-function SurveyPreview({ survey, publish, surveyId, isDisabled }) {   
-    console.log(isDisabled)
-    
-      
+function SurveyPreview({ survey, publish, surveyId, isDisabled }) {         
     return (
         <>
             <DrawerCloseButton />

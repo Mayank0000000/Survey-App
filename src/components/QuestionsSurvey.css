@@ -7,4 +7,15 @@
     margin: 10px;
     background-color: white;
     cursor: pointer;
+    position: relative;
+}
+.indicator {
+    position: absolute;
+    top: 10%;
+    left: 95%;
+    transform: translate(-50%);
+    background-color: green;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
 }
