@@ -1,7 +1,8 @@
 // questionRoutes.js
 const express = require('express');
 const router = express.Router();
-const SurveyData = require('./Models/SurveySchema');
+// const SurveyData = require('./Models/SurveySchema');
+const SurveyData = require('../Models/SurveySchema')
 
 router.get('/questions/:questionId', async (req, res) => {
   const questionId = req.params.questionId;
@@ -60,6 +61,11 @@ router.post('/add-question', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.get('/', async (req, res) => {
+  const  completeData = await SurveyData.find();
+  return res.json(completeData)
+})
 
 // Add other question-related routes...
 

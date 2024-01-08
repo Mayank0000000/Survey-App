@@ -2,7 +2,9 @@
 const express = require('express');
 const router = express.Router();
 
-const TesterSrvey = require('./Models/TesterSurveySchema');
+// const TesterSrvey = require('./Models/TesterSurveySchema');
+
+const TesterSrvey = require('../Models/TesterSurveySchema')
 
 router.get('/get-Survey/:id', async (req, res) => {
   try {
@@ -19,9 +21,6 @@ router.get('/get-Survey/:id', async (req, res) => {
 router.post('/add-Survey', async (req, res) => {
   try {
     const { surveyId, response } = req.body;
-    console.log(response);
-    console.log(surveyId);
-
     const newSurveyResponse = {
       surveyId,
       response,
